@@ -9,13 +9,27 @@
 </head>
 <body>
 
+    <audio id="miMusica" loop>
+        <source src="musica.mp3" type="audio/mpeg">
+    </audio>
+
     <div class="main-container">
-        
-        <h1 class="titulo">El 6 de cada mes...</h1>
+        <h1 class="titulo">El dia 6 de cada mes...</h1>
         <p class="subtitulo">Es Memoria y Gratitud.</p>
         
+        <button id="btnMusica" onclick="toggleMusica()">🎵 Toca para música</button>
+
         <div class="image-section">
-            <img src="nuestra_foto.jpeg" alt="Nosotros" class="foto-pareja">
+            <div class="album-container">
+                <div class="album-wrapper">
+                    <img src="foto1.jpg" class="foto-pareja">
+                    <img src="foto2.jpeg" class="foto-pareja">
+                    <img src="foto3.jpeg" class="foto-pareja">
+                    <img src="foto4.jpeg" class="foto-pareja">
+                    <img src="foto5.jpeg" class="foto-pareja">
+                    <img src="foto6.jpeg" class="foto-pareja">
+                </div>
+            </div>
             <div id="mariposas-container"></div>
         </div>
         
@@ -23,7 +37,6 @@
             <p>Gracias por cada momento compartido y por ser parte de mi camino.</p>
             <p class="aniversario">¡Feliz aniversario!</p>
         </div>
-
     </div>
 
     <script src="script.js"></script>
