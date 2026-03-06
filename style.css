@@ -1,0 +1,79 @@
+/* Reset y fondo */
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #fdfaf5; /* Crema suave */
+    font-family: 'Playfair Display', serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    color: #333;
+}
+
+.main-container {
+    width: 90%;
+    max-width: 400px;
+    text-align: center;
+    padding: 20px;
+}
+
+/* Títulos */
+.titulo {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+
+.subtitulo {
+    font-style: italic;
+    font-size: 1.1rem;
+    color: #666;
+    margin-bottom: 20px;
+}
+
+/* Sección de la Foto */
+.image-section {
+    position: relative;
+    display: inline-block;
+    margin: 20px 0;
+}
+
+.foto-pareja {
+    width: 100%;
+    max-width: 300px;
+    border-radius: 20px; /* Bordes redondeados */
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    border: 5px solid white; /* Efecto marco de foto */
+}
+
+/* Texto de Aniversario */
+.text-section p {
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+.aniversario {
+    font-family: 'Great Vibes', cursive;
+    font-size: 3rem;
+    color: #d4a373; /* Un tono dorado/café suave */
+    margin-top: 20px;
+}
+
+/* Estilo para las mariposas (el JS las usará) */
+.mariposa {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background-color: #9b59b6;
+    clip-path: polygon(50% 0%, 100% 35%, 100% 100%, 50% 65%, 0% 100%, 0% 35%);
+    opacity: 0;
+    pointer-events: none;
+}
+
+@keyframes fly {
+    0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+    20% { opacity: 0.6; }
+    100% { transform: translateY(-150px) rotate(360deg); opacity: 0; }
+}
