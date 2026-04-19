@@ -49,15 +49,17 @@ body {
     margin: 10px 0;
 }
 
-/* Álbum deslizable */
+/* Álbum deslizable corregido */
 .album-container {
     width: 100%;
     overflow-x: auto;
     display: flex;
-    scroll-snap-type: x mandatory;
+    /* Cambio clave: mandatory asegura que se detenga justo en la foto */
+    scroll-snap-type: x mandatory; 
     border-radius: 20px;
     scrollbar-width: none;
     box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    scroll-behavior: smooth;
 }
 
 .album-container::-webkit-scrollbar {
@@ -66,13 +68,16 @@ body {
 
 .album-wrapper {
     display: flex;
+    width: 100%;
 }
 
 .foto-pareja {
-    width: 320px; /* Ajustado para pantallas móviles */
+    /* Ahora la foto siempre medirá el 100% del contenedor */
+    width: 100%; 
     height: 400px;
     object-fit: cover;
-    scroll-snap-align: center;
+    /* Asegura que la foto se alinee perfectamente al inicio */
+    scroll-snap-align: start; 
     flex-shrink: 0;
 }
 
@@ -89,29 +94,4 @@ body {
 
 .mariposa {
     position: absolute;
-    width: 12px;
-    height: 12px;
-    background-color: #9b59b6;
-    clip-path: polygon(50% 0%, 100% 35%, 100% 100%, 50% 65%, 0% 100%, 0% 35%);
-    opacity: 0;
-    animation: fly 6s infinite linear;
-}
-
-@keyframes fly {
-    0% { transform: translateY(0) rotate(0deg); opacity: 0; }
-    20% { opacity: 0.6; }
-    100% { transform: translateY(-200px) rotate(360deg); opacity: 0; }
-}
-
-.aniversario {
-    font-family: 'Great Vibes', cursive;
-    font-size: 2.8rem;
-    color: #d4a373;
-    margin-top: 15px;
-}
-
-@keyframes fly {
-    0% { transform: translateY(0) rotate(0deg); opacity: 0; }
-    20% { opacity: 0.6; }
-    100% { transform: translateY(-150px) rotate(360deg); opacity: 0; }
-}
+    width: 12px
