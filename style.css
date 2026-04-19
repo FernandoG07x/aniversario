@@ -132,4 +132,5 @@ body {
 @keyframes fly {
     0% { transform: translateY(0) rotate(0deg); opacity: 0; }
     20% { opacity: 0.6; }
-    100% { transform: translateY(-150px) rotate(36
+    100% { transform: translateY(-150px) rotate(360deg); opacity: 0; }
+}
