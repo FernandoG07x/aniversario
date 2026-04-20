@@ -9,53 +9,42 @@
 </head>
 <body>
 
+    <div id="particles-container"></div>
+
     <audio id="miMusica" loop>
         <source src="musica.mp3" type="audio/mpeg">
     </audio>
 
     <div class="main-container">
-        <h1 class="titulo">El dia 6 de cada mes...</h1>
-        <p class="subtitulo">Es Memoria y Gratitud.</p>
-        
-        <button id="btnMusica" onclick="toggleMusica()">🎵 Toca para música</button>
+        <div class="glass-card">
+            <header>
+                <h1 class="titulo-animado">El día 6 de cada mes...</h1>
+                <p class="subtitulo">Es Memoria y Gratitud</p>
+            </header>
 
-        <div class="image-section">
-            <div class="album-container">
-                <div class="album-wrapper">
-                    <img src="foto1.jpg" class="foto-pareja">
-                    <img src="foto2.jpeg" class="foto-pareja">
-                    <img src="foto3.jpeg" class="foto-pareja">
-                    <img src="foto4.jpeg" class="foto-pareja">
-                    <img src="foto5.jpeg" class="foto-pareja">
-                    <img src="foto6.jpeg" class="foto-pareja">
-                    <img src="foto7.jpeg" class="foto-pareja">
-                    <img src="foto8.jpeg" class="foto-pareja">
-                    <img src="foto9.jpeg" class="foto-pareja">
-                    <img src="foto10.jpeg" class="foto-pareja">
-                    <img src="foto11.jpeg" class="foto-pareja">
-                    <img src="foto12.jpeg" class="foto-pareja">
-                    <img src="foto13.jpeg" class="foto-pareja">
-                    <img src="foto14.jpeg" class="foto-pareja">
-                    <img src="foto15.jpeg" class="foto-pareja">
-                    <img src="foto16.jpeg" class="foto-pareja">
-                    <img src="foto17.jpeg" class="foto-pareja">
-                    <img src="foto18.jpeg" class="foto-pareja">
-                    <img src="foto19.jpeg" class="foto-pareja">
-                    <img src="foto20.jpeg" class="foto-pareja">
-                    <img src="foto21.jpeg" class="foto-pareja">
-                    <img src="foto22.jpeg" class="foto-pareja">
-                    <img src="foto23.jpeg" class="foto-pareja">
-                    <img src="foto24.jpeg" class="foto-pareja">
-                    <img src="foto25.jpeg" class="foto-pareja">
-                    <img src="foto26.jpeg" class="foto-pareja">
-                </div>
+            <div class="music-control">
+                <button id="btnMusica" onclick="toggleMusica()" class="floating-btn">
+                    <span id="music-icon">🎵</span>
+                    <span id="music-text">Encender la magia</span>
+                </button>
             </div>
-            <div id="mariposas-container"></div>
-        </div>
-        
-        <div class="text-section">
-            <p>Gracias por cada momento compartido y por ser parte de mi camino.</p>
-            <p class="aniversario">¡Feliz aniversario!</p>
+
+            <main class="image-section">
+                <div class="album-container">
+                    <div class="album-wrapper">
+                        <img src="foto1.jpg" class="foto-pareja" alt="Nuestra memoria">
+                        <img src="foto2.jpeg" class="foto-pareja" alt="Nuestra memoria">
+                        <img src="foto3.jpeg" class="foto-pareja" alt="Nuestra memoria">
+                        <img src="foto26.jpeg" class="foto-pareja" alt="Nuestra memoria">
+                    </div>
+                </div>
+                <div id="mariposas-container"></div>
+            </main>
+            
+            <footer class="text-section">
+                <p class="mensaje-final">Gracias por cada momento compartido y por ser parte de mi camino.</p>
+                <h2 class="aniversario-glow">¡Feliz Aniversario!</h2>
+            </footer>
         </div>
     </div>
 
