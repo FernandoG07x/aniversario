@@ -53,7 +53,7 @@ function crearParticula() {
     const esCorazon = Math.random() > 0.5;
     
     p.classList.add('particle');
-    p.innerHTML = esCorazon ? '❤️' : '🦋': '❄️';
+    p.innerHTML = esCorazon ? '❤️' : '🦋' : '❄️';
     p.style.left = Math.random() * 100 + 'vw';
     p.style.fontSize = (Math.random() * 10 + 15) + 'px';
     p.style.animationDuration = (Math.random() * 3 + 4) + 's';
