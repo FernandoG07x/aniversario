@@ -1,10 +1,15 @@
+:root {
+    --color-primario: #d4a373;
+    --color-romantico: #ff758c;
+    --glass-bg: rgba(255, 255, 255, 0.7);
+}
+
 body {
     margin: 0;
     padding: 0;
-    /* Mejora 1: Fondo con gradiente animado suave */
-    background: linear-gradient(270deg, #fdfaf5, #fff5f5, #f9f1e7);
-    background-size: 600% 600%;
-    animation: gradientMove 15s ease infinite;
+    background: linear-gradient(270deg, #fdfaf5, #fff5f5, #f9f1e7, #ffe4e1);
+    background-size: 800% 800%;
+    animation: gradientMove 20s ease infinite;
     font-family: 'Playfair Display', serif;
     display: flex;
     justify-content: center;
@@ -20,117 +25,134 @@ body {
     100%{background-position:0% 50%}
 }
 
-.main-container {
+/* Tarjeta principal con efecto cristal */
+.glass-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 30px;
+    padding: 30px 20px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+    border: 1px solid rgba(255, 255, 255, 0.5);
     width: 90%;
-    max-width: 400px;
+    max-width: 420px;
     text-align: center;
-    padding: 10px;
+    z-index: 5;
 }
 
-.titulo {
+.titulo-animado {
     font-size: 2.2rem;
     margin-bottom: 5px;
+    color: #4a4a4a;
+    animation: fadeInDown 1s ease-out;
 }
 
 .subtitulo {
     font-style: italic;
     font-size: 1.1rem;
-    color: #666;
-    margin-bottom: 10px;
+    color: #888;
+    margin-bottom: 20px;
 }
 
-/* Estilo del botón de música */
-#btnMusica {
-    background: #d4a373;
+/* Botón de música mejorado */
+.floating-btn {
+    background: var(--color-primario);
     color: white;
     border: none;
-    padding: 10px 22px;
-    border-radius: 25px;
+    padding: 12px 25px;
+    border-radius: 50px;
     font-family: 'Playfair Display', serif;
-    margin-bottom: 20px;
     cursor: pointer;
     font-size: 0.9rem;
-    transition: transform 0.3s ease, background 0.3s ease;
-    box-shadow: 0 4px 15px rgba(212, 163, 115, 0.3);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 8px 20px rgba(212, 163, 115, 0.4);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0 auto 25px;
 }
 
-#btnMusica:hover {
-    transform: scale(1.05);
+.floating-btn:hover {
+    transform: translateY(-3px);
     background: #c39466;
+    box-shadow: 0 12px 25px rgba(212, 163, 115, 0.5);
 }
 
-.image-section {
-    position: relative;
-    margin: 10px 0;
+/* Estado cuando la música suena */
+.playing {
+    animation: pulse 2s infinite;
+    background: var(--color-romantico);
 }
 
-/* Álbum deslizable corregido */
+@keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(255, 117, 140, 0.7); }
+    70% { box-shadow: 0 0 0 15px rgba(255, 117, 140, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(255, 117, 140, 0); }
+}
+
+/* Álbum */
 .album-container {
     width: 100%;
     overflow-x: auto;
     display: flex;
     scroll-snap-type: x mandatory; 
-    border-radius: 25px;
+    border-radius: 20px;
     scrollbar-width: none;
-    box-shadow: 0 15px 35px rgba(0,0,0,0.15);
-    scroll-behavior: smooth;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
 }
 
-.album-container::-webkit-scrollbar {
-    display: none;
-}
-
-.album-wrapper {
-    display: flex;
-    width: 100%;
-}
+.album-container::-webkit-scrollbar { display: none; }
 
 .foto-pareja {
-    width: 100%; 
-    height: 400px;
+    width: 100%;
+    height: 380px;
     object-fit: cover;
-    scroll-snap-align: start; 
+    scroll-snap-align: center;
     flex-shrink: 0;
-    /* Mejora 2: Efecto de aparición suave al cargar */
-    animation: fotoFade 1.2s ease-out;
+    transition: transform 0.5s ease;
 }
 
-@keyframes fotoFade {
-    from { opacity: 0; transform: scale(0.95); filter: blur(5px); }
-    to { opacity: 1; transform: scale(1); filter: blur(0); }
-}
-
-/* Mariposas */
-#mariposas-container {
-    position: absolute;
+/* Animaciones de partículas (JS) */
+#particles-container {
+    position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
+    width: 100vw;
+    height: 100vh;
     pointer-events: none;
-    z-index: 10;
+    z-index: 1;
 }
 
-.mariposa {
+.corazon-float, .mariposa-float {
     position: absolute;
-    width: 12px;
-    height: 12px;
-    background-color: #9b59b6;
-    clip-path: polygon(50% 0%, 100% 35%, 100% 100%, 50% 65%, 0% 100%, 0% 35%);
+    bottom: -10%;
+    user-select: none;
     opacity: 0;
-    animation: fly 6s infinite linear;
 }
 
-.aniversario {
+@keyframes subirYDesaparecer {
+    0% { transform: translateY(0) rotate(0deg) translateX(0); opacity: 0; }
+    10% { opacity: 0.8; }
+    50% { transform: translateY(-50vh) rotate(180deg) translateX(50px); }
+    100% { transform: translateY(-110vh) rotate(360deg) translateX(-50px); opacity: 0; }
+}
+
+/* Texto final */
+.aniversario-glow {
     font-family: 'Great Vibes', cursive;
-    font-size: 3rem;
-    color: #d4a373;
-    margin-top: 15px;
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.05);
+    font-size: 3.5rem;
+    color: var(--color-primario);
+    margin-top: 10px;
+    animation: glow 2s ease-in-out infinite alternate;
 }
 
-@keyframes fly {
-    0% { transform: translateY(0) rotate(0deg); opacity: 0; }
-    20% { opacity: 0.6; }
-    100% { transform: translateY(-150px) rotate(360deg); opacity: 0; }
+@keyframes glow {
+    from { text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px var(--color-primario); }
+    to { text-shadow: 0 0 10px #fff, 0 0 20px #ffccd5, 0 0 30px #ffccd5; }
+}
+
+@keyframes fadeInDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
 }
