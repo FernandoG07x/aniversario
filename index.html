@@ -11,9 +11,7 @@
 
     <div id="particles-container"></div>
 
-    <audio id="miMusica" loop>
-        <source src="musica.mp3" type="audio/mpeg">
-    </audio>
+    <audio id="miMusica" loop></audio>
 
     <div class="main-container">
         <div class="glass-card">
@@ -22,16 +20,23 @@
                 <p class="subtitulo">Es Memoria y Gratitud</p>
             </header>
 
-            <button id="btnMusica" onclick="toggleMusica()" class="floating-btn">
-                <span id="music-icon">🎵</span>
-                <span id="music-text">Encender la magia</span>
-            </button>
+            <div class="music-player">
+                <button id="btnMusica" onclick="toggleMenu()" class="floating-btn">
+                    <span id="music-icon">❄️</span>
+                    <span id="music-text">Elegir nuestra música</span>
+                </button>
+                
+                <div id="lista-musica" class="music-list hidden">
+                    <div class="track" onclick="seleccionarMusica('Musica/musica1.mp3', 'Nuestra Canción 1')">🎵 Canción 1</div>
+                    <div class="track" onclick="seleccionarMusica('Musica/musica2.mp3', 'Momento Mágico')">🎵 Canción 2</div>
+                    <div class="track" onclick="seleccionarMusica('Musica/musica3.mp3', 'Siempre Juntos')">🎵 Canción 3</div>
+                </div>
+            </div>
 
             <div class="image-section">
                 <div class="album-container">
                     <div class="album-wrapper" id="contenedor-fotos"></div>
                 </div>
-                <div id="mariposas-container"></div>
             </div>
             
             <div class="text-section">
@@ -42,5 +47,7 @@
     </div>
 
     <script src="script.js"></script>
+</body>
+</html>
 </body>
 </html>
