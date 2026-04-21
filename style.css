@@ -5,62 +5,45 @@
 }
 
 body {
-    margin: 0;
-    padding: 0;
+    margin: 0; padding: 0;
     background: linear-gradient(270deg, #fdfaf5, #fff5f5, #f9f1e7, #ffe4e1);
     background-size: 800% 800%;
     animation: gradientMove 20s ease infinite;
     font-family: 'Playfair Display', serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    color: #333;
-    overflow-x: hidden;
+    display: flex; justify-content: center; align-items: center;
+    min-height: 100vh; color: #333; overflow-x: hidden;
 }
 
 @keyframes gradientMove {
-    0%{background-position:0% 50%}
-    50%{background-position:100% 50%}
-    100%{background-position:0% 50%}
+    0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%}
 }
 
 .glass-card {
     background: var(--glass-bg);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border-radius: 30px;
-    padding: 30px 20px;
+    backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    border-radius: 30px; padding: 30px 20px;
     box-shadow: 0 20px 40px rgba(0,0,0,0.1);
     border: 1px solid rgba(255, 255, 255, 0.5);
-    width: 90%;
-    max-width: 400px;
-    text-align: center;
-    z-index: 5;
+    width: 90%; max-width: 400px; text-align: center; z-index: 5;
+    animation: cardFadeIn 1.5s ease-out;
 }
 
-.titulo-animado { font-size: 2rem; margin-bottom: 5px; color: #4a4a4a; }
-.subtitulo { font-style: italic; color: #888; margin-bottom: 20px; }
+@keyframes cardFadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.music-player { position: relative; display: inline-block; margin-bottom: 25px; }
 
 .floating-btn {
-    background: var(--color-primario);
-    color: white;
-    border: none;
-    padding: 12px 25px;
-    border-radius: 50px;
-    cursor: pointer;
-    transition: all 0.4s ease;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin: 0 auto 20px;
+    background: var(--color-primario); color: white; border: none;
+    padding: 12px 25px; border-radius: 50px; cursor: pointer;
+    transition: all 0.4s ease; display: flex; align-items: center; gap: 10px;
+    font-family: 'Playfair Display', serif;
     box-shadow: 0 5px 15px rgba(212, 163, 115, 0.3);
 }
 
-.playing {
-    animation: pulse 2s infinite;
-    background: var(--color-romantico);
-}
+.playing { animation: pulse 2s infinite; background: var(--color-romantico); }
 
 @keyframes pulse {
     0% { box-shadow: 0 0 0 0 rgba(255, 117, 140, 0.7); }
@@ -68,56 +51,46 @@ body {
     100% { box-shadow: 0 0 0 0 rgba(255, 117, 140, 0); }
 }
 
+.music-list {
+    position: absolute; top: 115%; left: 50%; transform: translateX(-50%);
+    background: rgba(255, 255, 255, 0.98); border-radius: 15px;
+    padding: 8px; width: 220px; box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    z-index: 100; border: 1px solid rgba(255,255,255,0.8);
+}
+
+.hidden { display: none; }
+
+.track {
+    padding: 12px; margin: 4px 0; border-radius: 10px; cursor: pointer;
+    font-size: 0.9rem; transition: 0.3s; color: #444; text-align: left;
+}
+
+.track:hover { background: var(--color-primario); color: white; }
+
 .album-container {
-    width: 100%;
-    overflow-x: auto;
-    display: flex;
-    scroll-snap-type: x mandatory;
-    border-radius: 20px;
-    scrollbar-width: none;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    width: 100%; overflow-x: auto; display: flex;
+    scroll-snap-type: x mandatory; border-radius: 20px;
+    scrollbar-width: none; margin-bottom: 20px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
 }
 
 .album-container::-webkit-scrollbar { display: none; }
 
-.album-wrapper { display: flex; }
-
 .foto-pareja {
-    width: 100%;
-    height: 380px;
-    object-fit: cover;
-    scroll-snap-align: center;
-    flex-shrink: 0;
-    animation: fotoFade 1s ease-out;
+    width: 100%; height: 380px; object-fit: cover;
+    scroll-snap-align: center; flex-shrink: 0;
+    transition: transform 0.5s ease;
 }
 
-@keyframes fotoFade {
-    from { opacity: 0; transform: scale(0.9); }
-    to { opacity: 1; transform: scale(1); }
-}
+#particles-container { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 1; }
 
-#particles-container {
-    position: fixed;
-    top: 0; left: 0; width: 100vw; height: 100vh;
-    pointer-events: none; z-index: 1;
-}
-/* Esto hará que los copos y mariposas resalten más */
 .particle {
-    position: absolute;
-    bottom: -10%;
+    position: absolute; bottom: -10%; opacity: 0;
+    animation: subirYRotar 6s linear forwards;
     user-select: none;
-    pointer-events: none;
-    text-shadow: 0 0 5px rgba(255, 255, 255, 0.8); /* Brillo suave */
-    z-index: 1;
-}
-.particle {
-    position: absolute;
-    bottom: -10%;
-    opacity: 0;
-    animation: subir 6s linear forwards;
 }
 
-@keyframes subir {
+@keyframes subirYRotar {
     0% { transform: translateY(0) rotate(0deg); opacity: 0; }
     10% { opacity: 0.8; }
     100% { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
@@ -125,7 +98,7 @@ body {
 
 .aniversario-glow {
     font-family: 'Great Vibes', cursive;
-    font-size: 3rem;
+    font-size: 3.2rem;
     color: var(--color-primario);
-    text-shadow: 0 0 10px rgba(212, 163, 115, 0.2);
+    margin-top: 15px;
 }
