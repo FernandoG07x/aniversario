@@ -80,5 +80,3 @@ document.addEventListener("DOMContentLoaded", () => {
     cargarFotos();
     setInterval(crearParticula, 600);
 });
-    setInterval(crearParticula, 600); // Crea un elemento cada 0.6 segundos
-});
