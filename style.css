@@ -101,7 +101,15 @@ body {
     top: 0; left: 0; width: 100vw; height: 100vh;
     pointer-events: none; z-index: 1;
 }
-
+/* Esto hará que los copos y mariposas resalten más */
+.particle {
+    position: absolute;
+    bottom: -10%;
+    user-select: none;
+    pointer-events: none;
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.8); /* Brillo suave */
+    z-index: 1;
+}
 .particle {
     position: absolute;
     bottom: -10%;
