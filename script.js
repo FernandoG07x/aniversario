@@ -1,20 +1,22 @@
-// --- CONFIGURACIÓN ---
-const totalFotos = 26;
-const carpeta = "fotos"; 
+const config = {
+    totalFotos: 26,
+    carpetaFotos: "fotos",
+    carpetaMusica: "Musica" // Ruta de tu nueva carpeta
+};
 
-// --- CARGA DE ÁLBUM ---
+// --- CARGA DE FOTOS ---
 function cargarFotos() {
     const contenedor = document.getElementById('contenedor-fotos');
     if (!contenedor) return;
 
-    for (let i = 1; i <= totalFotos; i++) {
+    for (let i = 1; i <= config.totalFotos; i++) {
         const img = document.createElement('img');
         // Intenta cargar .jpeg por defecto
-        img.src = `${carpeta}/foto${i}.jpeg`;
+        img.src = `${config.carpetaFotos}/foto${i}.jpeg`;
         img.classList.add('foto-pareja');
-        img.loading = "lazy";
-
-        // Si la foto es .jpg, la corrige automáticamente
+        img.alt = `Momento ${i}`;
+        
+        // Manejo de errores por si la extensión es .jpg
         img.onerror = function() {
             if (this.src.includes('.jpeg')) {
                 this.src = this.src.replace('.jpeg', '.jpg');
@@ -26,56 +28,66 @@ function cargarFotos() {
     }
 }
 
-// --- MÚSICA ---
-function toggleMusica() {
-    const audio = document.getElementById("miMusica");
-    const btn = document.getElementById("btnMusica");
-    const icon = document.getElementById("music-icon");
-    const text = document.getElementById("music-text");
-
-    if (audio.paused) {
-        audio.play();
-        btn.classList.add('playing');
-        icon.innerHTML = "⏸️";
-        text.innerHTML = "Nuestra música";
-    } else {
-        audio.pause();
-        btn.classList.remove('playing');
-        icon.innerHTML = "🎵";
-        text.innerHTML = "Encender la magia";
-    }
+// --- SISTEMA DE MÚSICA ---
+function toggleMenu() {
+    const lista = document.getElementById("lista-musica");
+    lista.classList.toggle("hidden");
 }
 
-// --- PARTÍCULAS (CORAZONES, MARIPOSAS Y NIEVE) ---
+function seleccionarMusica(rutaArchivo, nombreMostrar) {
+    const audio = document.getElementById("miMusica");
+    const btn = document.getElementById("btnMusica");
+    const text = document.getElementById("music-text");
+    const icon = document.getElementById("music-icon");
+
+    // Cargamos y reproducimos
+    audio.src = rutaArchivo;
+    audio.play().then(() => {
+        btn.classList.add('playing');
+        icon.innerHTML = "⏸️";
+        text.innerHTML = nombreMostrar;
+    }).catch(e => {
+        console.error("Error al cargar música:", e);
+        alert("No se pudo cargar el archivo: " + rutaArchivo);
+    });
+    
+    toggleMenu();
+}
+
+// --- PARTÍCULAS (CORAZONES, MARIPOSAS, NIEVE) ---
 function crearParticula() {
     const container = document.getElementById('particles-container');
-    if (!container) return; // Seguridad por si el contenedor no existe
-
+    if(!container) return;
+    
     const p = document.createElement('div');
     p.classList.add('particle');
-
-    // Lógica para 3 opciones (33% de probabilidad para cada una)
-    const random = Math.random();
-    if (random < 0.33) {
-        p.innerHTML = '❤️';
-    } else if (random < 0.66) {
-        p.innerHTML = '🦋';
-    } else {
-        p.innerHTML = '❄️';
-    }
+    
+    const r = Math.random();
+    if (r < 0.33) p.innerHTML = '❤️';
+    else if (r < 0.66) p.innerHTML = '🦋';
+    else p.innerHTML = '❄️';
 
     p.style.left = Math.random() * 100 + 'vw';
-    p.style.fontSize = (Math.random() * 10 + 15) + 'px';
+    p.style.fontSize = (Math.random() * 12 + 15) + 'px';
     p.style.animationDuration = (Math.random() * 3 + 4) + 's';
     
     container.appendChild(p);
     
-    // Eliminar la partícula después de que termine la animación
     setTimeout(() => p.remove(), 6000);
 }
 
-// --- INICIO ---
+// Cerrar el menú si ella toca en cualquier otra parte de la pantalla
+window.onclick = function(event) {
+    if (!event.target.closest('.music-player')) {
+        const lista = document.getElementById("lista-musica");
+        if (lista && !lista.classList.contains('hidden')) {
+            lista.classList.add('hidden');
+        }
+    }
+}
+
+// --- INICIALIZACIÓN ---
 document.addEventListener("DOMContentLoaded", () => {
     cargarFotos();
-    setInterval(crearParticula, 500);
+    setInterval(crearParticula, 600); // Crea un elemento cada 0.6 segundos
 });
