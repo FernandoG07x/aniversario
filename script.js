@@ -1,37 +1,34 @@
 const config = {
     totalFotos: 26,
     carpetaFotos: "fotos",
-    carpetaMusica: "Musica" // Ruta de tu nueva carpeta
+    carpetaMusica: "Musica"
 };
 
-// --- CARGA DE FOTOS ---
 function cargarFotos() {
     const contenedor = document.getElementById('contenedor-fotos');
     if (!contenedor) return;
 
+    contenedor.innerHTML = ""; // Limpia para evitar duplicados
+
     for (let i = 1; i <= config.totalFotos; i++) {
         const img = document.createElement('img');
-        // Intenta cargar .jpeg por defecto
         img.src = `${config.carpetaFotos}/foto${i}.jpeg`;
         img.classList.add('foto-pareja');
         img.alt = `Momento ${i}`;
         
-        // Manejo de errores por si la extensión es .jpg
         img.onerror = function() {
             if (this.src.includes('.jpeg')) {
                 this.src = this.src.replace('.jpeg', '.jpg');
             } else {
-                this.style.display = 'none';
+                this.remove(); // En lugar de display: none, la quitamos del DOM
             }
         };
         contenedor.appendChild(img);
     }
 }
 
-// --- SISTEMA DE MÚSICA ---
 function toggleMenu() {
-    const lista = document.getElementById("lista-musica");
-    lista.classList.toggle("hidden");
+    document.getElementById("lista-musica").classList.toggle("hidden");
 }
 
 function seleccionarMusica(rutaArchivo, nombreMostrar) {
@@ -40,21 +37,16 @@ function seleccionarMusica(rutaArchivo, nombreMostrar) {
     const text = document.getElementById("music-text");
     const icon = document.getElementById("music-icon");
 
-    // Cargamos y reproducimos
     audio.src = rutaArchivo;
     audio.play().then(() => {
         btn.classList.add('playing');
         icon.innerHTML = "⏸️";
         text.innerHTML = nombreMostrar;
-    }).catch(e => {
-        console.error("Error al cargar música:", e);
-        alert("No se pudo cargar el archivo: " + rutaArchivo);
-    });
+    }).catch(e => console.error("Error al cargar música:", e));
     
     toggleMenu();
 }
 
-// --- PARTÍCULAS (CORAZONES, MARIPOSAS, NIEVE) ---
 function crearParticula() {
     const container = document.getElementById('particles-container');
     if(!container) return;
@@ -72,11 +64,9 @@ function crearParticula() {
     p.style.animationDuration = (Math.random() * 3 + 4) + 's';
     
     container.appendChild(p);
-    
     setTimeout(() => p.remove(), 6000);
 }
 
-// Cerrar el menú si ella toca en cualquier otra parte de la pantalla
 window.onclick = function(event) {
     if (!event.target.closest('.music-player')) {
         const lista = document.getElementById("lista-musica");
@@ -86,8 +76,9 @@ window.onclick = function(event) {
     }
 }
 
-// --- INICIALIZACIÓN ---
 document.addEventListener("DOMContentLoaded", () => {
     cargarFotos();
+    setInterval(crearParticula, 600);
+});
     setInterval(crearParticula, 600); // Crea un elemento cada 0.6 segundos
 });
