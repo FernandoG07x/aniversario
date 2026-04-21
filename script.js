@@ -46,19 +46,31 @@ function toggleMusica() {
     }
 }
 
-// --- PARTÍCULAS (CORAZONES Y MARIPOSAS) ---
+// --- PARTÍCULAS (CORAZONES, MARIPOSAS Y NIEVE) ---
 function crearParticula() {
     const container = document.getElementById('particles-container');
+    if (!container) return; // Seguridad por si el contenedor no existe
+
     const p = document.createElement('div');
-    const esCorazon = Math.random() > 0.5;
-    
     p.classList.add('particle');
-    p.innerHTML = esCorazon ? '❤️' : '🦋' : '❄️';
+
+    // Lógica para 3 opciones (33% de probabilidad para cada una)
+    const random = Math.random();
+    if (random < 0.33) {
+        p.innerHTML = '❤️';
+    } else if (random < 0.66) {
+        p.innerHTML = '🦋';
+    } else {
+        p.innerHTML = '❄️';
+    }
+
     p.style.left = Math.random() * 100 + 'vw';
     p.style.fontSize = (Math.random() * 10 + 15) + 'px';
     p.style.animationDuration = (Math.random() * 3 + 4) + 's';
     
     container.appendChild(p);
+    
+    // Eliminar la partícula después de que termine la animación
     setTimeout(() => p.remove(), 6000);
 }
 
