@@ -1,136 +1,332 @@
-const config = {
-    totalFotos: 26,
-    carpetaFotos: "fotos",
-    carpetaMusica: "Musica"
-};
-
-function obtenerRotacionAleatoria(index) {
-    const angulos = [-7, 5, -4, 6, -2, 4, -6, 3, -5, 7];
-    return angulos[index % angulos.length];
+:root {
+    --primary-rose: #ff758c;
+    --secondary-rose: #ff7eb3;
+    --gold-accent: #d4a373;
+    --dark-text: #2c2c2c;
+    --light-text: #6e6e6e;
+    --glass-bg: rgba(255, 255, 255, 0.45);
+    --glass-border: rgba(255, 255, 255, 0.6);
 }
 
-function cargarFotos() {
-    const contenedor = document.getElementById('contenedor-fotos');
-    if (!contenedor) return;
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
 
-    contenedor.innerHTML = ""; 
+body {
+    background: linear-gradient(135deg, #fdfbf7 0%, #ffe4e1 40%, #fbe4ec 70%, #fff5f5 100%);
+    background-size: 400% 400%;
+    animation: romanticGradient 24s ease infinite;
+    font-family: 'Montserrat', sans-serif;
+    color: var(--dark-text);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow-x: hidden;
+    padding: 20px;
+}
 
-    // Cargamos en orden para que la foto 1 quede arriba del todo
-    for (let i = config.totalFotos; i >= 1; i--) {
-        const card = document.createElement('div');
-        card.classList.add('polaroid-card');
-        
-        const rotacion = obtenerRotacionAleatoria(i);
-        card.style.transform = `rotate(${rotacion}deg)`;
-        card.style.zIndex = i;
+@keyframes romanticGradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
 
-        const img = document.createElement('img');
-        img.src = `${config.carpetaFotos}/foto${i}.jpeg`;
-        img.alt = `Nuestro Momento nº ${i}`;
-        
-        img.onerror = function() {
-            if (this.src.includes('.jpeg')) {
-                this.src = this.src.replace('.jpeg', '.jpg');
-            } else {
-                card.remove(); 
-                reordenarZIndex();
-            }
-        };
+/* Contenedor Principal Adaptable */
+.main-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 5;
+}
 
-        // EVENTO CORREGIDO: Al hacer clic o tocar en móvil
-        card.addEventListener('click', (e) => {
-            e.stopPropagation(); // Evita que el clic se descarte por el window.onclick
-            
-            // Si ya está activa, la mandamos al fondo para poder ver la siguiente
-            if (card.classList.contains('active')) {
-                card.classList.remove('active');
-                card.style.zIndex = i; // Vuelve a su lugar original en la pila
-            } else {
-                // Quitamos la clase activa de cualquier otra foto primero
-                document.querySelectorAll('.polaroid-card').forEach(c => c.classList.remove('active'));
-                // Activamos esta foto (se endereza y escala por CSS)
-                card.classList.add('active');
-            }
-        });
+/* Tarjeta Cristal Esmerilado de Alta Gama */
+.glass-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-radius: 40px;
+    padding: 40px 30px;
+    box-shadow: 0 30px 60px rgba(255, 117, 140, 0.15), 
+                0 10px 25px rgba(0, 0, 0, 0.04),
+                inset 0 1px 2px rgba(255, 255, 255, 0.6);
+    border: 1px solid var(--glass-border);
+    width: 100%;
+    max-width: 440px;
+    text-align: center;
+    animation: cardEntrance 1.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
 
-        card.appendChild(img);
-        contenedor.appendChild(card);
+@keyframes cardEntrance {
+    from { opacity: 0; transform: translateY(40px) scale(0.96); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* Cabecera */
+.date-badge {
+    display: inline-block;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: var(--gold-accent);
+    font-weight: 500;
+    margin-bottom: 12px;
+}
+
+.titulo-animado {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-size: 1.6rem;
+    letter-spacing: -0.5px;
+    color: #1a1a1a;
+    margin-bottom: 8px;
+}
+
+.subtitulo {
+    font-size: 0.9rem;
+    color: var(--light-text);
+    font-style: italic;
+    font-weight: 300;
+    margin-bottom: 30px;
+}
+
+/* Reproductor de Música */
+.music-player {
+    position: relative;
+    display: inline-block;
+    margin-bottom: 40px;
+    width: 100%;
+}
+
+.floating-btn {
+    background: white;
+    color: var(--dark-text);
+    border: none;
+    padding: 14px 28px;
+    border-radius: 50px;
+    cursor: pointer;
+    margin: 0 auto;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    box-shadow: 0 10px 25px rgba(255, 117, 140, 0.1), 0 4px 10px rgba(0, 0, 0, 0.03);
+    width: 90%;
+}
+
+.floating-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 30px rgba(255, 117, 140, 0.2);
+    background: #fffdfd;
+}
+
+.icon-pulse {
+    display: inline-block;
+    animation: iconFloat 2s ease-in-out infinite;
+}
+
+@keyframes iconFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-4px); }
+}
+
+.playing {
+    background: linear-gradient(135deg, var(--primary-rose), var(--secondary-rose));
+    color: white;
+}
+.playing:hover {
+    background: linear-gradient(135deg, var(--primary-rose), var(--secondary-rose));
+}
+
+@keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(255, 117, 140, 0.7); }
+    70% { box-shadow: 0 0 0 12px rgba(255, 117, 140, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(255, 117, 140, 0); }
+}
+
+/* Lista de canciones desplegable */
+.music-list {
+    position: absolute;
+    top: 120%;
+    left: 5%;
+    right: 5%;
+    background: rgba(255, 255, 255, 0.96);
+    backdrop-filter: blur(10px);
+    border-radius: 24px;
+    padding: 12px;
+    box-shadow: 0 20px 45px rgba(0,0,0,0.08);
+    z-index: 100;
+    border: 1px solid rgba(255,255,255,0.9);
+    opacity: 1;
+    transform: translateY(0);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.music-list.hidden {
+    opacity: 0;
+    transform: translateY(-10px);
+    pointer-events: none;
+    display: none;
+}
+
+.music-list-header {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #a0a0a0;
+    padding: 8px 12px 12px 12px;
+    border-bottom: 1px solid #f0f0f0;
+    margin-bottom: 6px;
+    text-align: left;
+}
+
+.track {
+    padding: 12px 16px;
+    margin: 2px 0;
+    border-radius: 14px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: all 0.25s;
+    color: #444;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.track-number {
+    font-weight: 300;
+    color: var(--primary-rose);
+    font-size: 0.75rem;
+}
+
+.track:hover {
+    background: rgba(255, 117, 140, 0.08);
+    color: var(--primary-rose);
+    transform: translateX(4px);
+}
+
+/* 📸 SECCIÓN ÁLBUM: Pila de fotos Polaroid */
+.image-section {
+    position: relative;
+    width: 100%;
+    height: 340px;
+    margin-bottom: 35px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.polaroid-stack {
+    position: relative;
+    width: 240px;
+    height: 290px;
+}
+
+.polaroid-card {
+    position: absolute;
+    width: 240px;
+    height: 290px;
+    background: white;
+    padding: 12px 12px 45px 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08), 0 2px 6px rgba(0, 0, 0, 0.04);
+    border-radius: 2px;
+    transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.3s, box-shadow 0.3s;
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+}
+
+.polaroid-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    pointer-events: none; /* Crucial para redirigir el toque al contenedor */
+    border-radius: 1px;
+}
+
+.polaroid-card.shuffling {
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+@media (hover: hover) {
+    .polaroid-card:hover:not(.shuffling) {
+        transform: scale(1.03) rotate(0deg) !important;
+        box-shadow: 0 15px 35px rgba(255, 117, 140, 0.15);
     }
 }
 
-function reordenarZIndex() {
-    const cards = document.querySelectorAll('.polaroid-card');
-    cards.forEach((card, index) => {
-        card.style.zIndex = cards.length - index;
-    });
+.gallery-hint {
+    font-size: 0.75rem;
+    color: var(--light-text);
+    margin-top: 15px;
+    font-weight: 300;
 }
 
-function toggleMenu() {
-    const lista = document.getElementById("lista-musica");
-    if(lista) {
-        lista.classList.toggle("hidden");
-    }
+/* Sección de Texto Final */
+.text-section {
+    padding: 0 10px;
 }
 
-function seleccionarMusica(rutaArchivo, nombreMostrar) {
-    const audio = document.getElementById("miMusica");
-    const btn = document.getElementById("btnMusica");
-    const text = document.getElementById("music-text");
-    const icon = document.getElementById("music-icon");
-
-    audio.src = rutaArchivo;
-    audio.play().then(() => {
-        btn.classList.add('playing');
-        icon.innerHTML = "❤️"; 
-        icon.classList.remove('icon-pulse');
-        icon.style.animation = "pulse 1.2s infinite alternate"; 
-        text.innerHTML = nombreMostrar;
-    }).catch(e => console.error("Error al reproducir audio:", e));
-    
-    toggleMenu();
+.mensaje-final {
+    font-size: 0.9rem;
+    line-height: 1.7;
+    color: #555;
+    font-weight: 300;
+    margin-bottom: 20px;
 }
 
-function crearParticula() {
-    const container = document.getElementById('particles-container');
-    if(!container) return;
-    
-    const p = document.createElement('div');
-    p.classList.add('particle');
-    
-    const r = Math.random();
-    if (r < 0.4) {
-        p.innerHTML = '❤️';
-        p.style.color = '#ffb3c1'; 
-    } else if (r < 0.7) {
-        p.innerHTML = '✨'; 
-        p.style.color = '#ffe4a0';
-    } else {
-        p.innerHTML = '🦋'; 
-        p.style.color = '#ffccd5';
-    }
-
-    p.style.left = Math.random() * 100 + 'vw';
-    p.style.fontSize = (Math.random() * 10 + 12) + 'px';
-    p.style.animationDuration = (Math.random() * 4 + 5) + 's';
-    
-    container.appendChild(p);
-    setTimeout(() => p.remove(), 7000);
+.divider {
+    color: var(--gold-accent);
+    font-size: 0.7rem;
+    letter-spacing: 5px;
+    margin-bottom: 15px;
+    opacity: 0.7;
 }
 
-window.onclick = function(event) {
-    if (!event.target.closest('.music-player')) {
-        const lista = document.getElementById("lista-musica");
-        if (lista && !lista.classList.contains('hidden')) {
-            lista.classList.add('hidden');
-        }
-    }
-    // Si toca cualquier parte de la pantalla que no sea una foto, desactiva la foto actual
-    if (!event.target.closest('.polaroid-card')) {
-        document.querySelectorAll('.polaroid-card').forEach(c => c.classList.remove('active'));
-    }
+.aniversario-glow {
+    font-family: 'Alex Brush', cursive;
+    font-size: 3.4rem;
+    font-weight: 400;
+    background: linear-gradient(45deg, #cc5a71, #ff758c, #e29578);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-    cargarFotos();
-    setInterval(crearParticula, 500);
-});
+/* Partículas */
+#particles-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.particle {
+    position: absolute;
+    bottom: -10%;
+    opacity: 0;
+    animation: floatUpAndRotate 7s linear forwards;
+    user-select: none;
+}
+
+@keyframes floatUpAndRotate {
+    0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+    15% { opacity: 0.6; }
+    90% { opacity: 0.4; }
+    100% { transform: translateY(-115vh) rotate(280deg); opacity: 0; }
+}
