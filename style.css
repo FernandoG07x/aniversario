@@ -212,8 +212,8 @@ body {
 .image-section {
     position: relative;
     width: 100%;
-    height: 380px;
-    margin-bottom: 40px;
+    height: 340px;
+    margin-bottom: 30px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -222,49 +222,37 @@ body {
 
 .polaroid-stack {
     position: relative;
-    width: 260px;
-    height: 310px;
+    width: 240px;
+    height: 290px;
 }
 
-.foto-pareja {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    background-color: white;
-    padding: 14px 14px 45px 14px; /* Espacio abajo para el look de Polaroid */
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08), 0 2px 8px rgba(0, 0, 0, 0.04);
-    border: 1px solid rgba(0,0,0,0.03);
-    object-fit: cover; /* Aplica al contenedor real que crearemos en JS */
-    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), z-index 0s;
-    cursor: pointer;
-}
-
-/* Nota: En JS inyectaremos divs que contienen la imagen dentro para hacer el marco Polaroid perfecto */
 .polaroid-card {
     position: absolute;
-    width: 260px;
-    height: 310px;
+    width: 240px;
+    height: 290px;
     background: white;
-    padding: 12px 12px 42px 12px;
-    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.09), 0 2px 10px rgba(0, 0, 0, 0.03);
+    padding: 12px 12px 45px 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1), 0 2px 5px rgba(0, 0, 0, 0.05);
     border-radius: 2px;
-    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s;
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.3s, z-index 0.1s;
     cursor: pointer;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
 }
 
 .polaroid-card img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    pointer-events: none; /* Crucial: hace que el clic pase directo al contenedor de la tarjeta */
+    border-radius: 2px;
 }
 
-/* Cuando una Polaroid se activa o se le hace Hover se va al frente suavemente */
-.polaroid-card:hover, .polaroid-card.active {
-    transform: scale(1.1) rotate(0deg) !important;
-    z-index: 99 !important;
-    box-shadow: 0 25px 50px rgba(255, 117, 140, 0.2);
+/* Cuando una Polaroid está activa (se le dio clic) */
+.polaroid-card.active {
+    transform: scale(1.12) rotate(0deg) translateY(-10px) !important;
+    z-index: 999 !important; /* Se va al frente absoluto */
+    box-shadow: 0 25px 50px rgba(255, 117, 140, 0.25);
 }
 
 .gallery-hint {
@@ -273,6 +261,7 @@ body {
     margin-top: 15px;
     font-weight: 300;
 }
+
 
 /* Sección de Texto Final */
 .text-section {
