@@ -146,7 +146,13 @@ body {
     background: linear-gradient(135deg, var(--primary-rose), var(--secondary-rose));
 }
 
-/* Lista de canciones desplegable moderna */
+@keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(255, 117, 140, 0.7); }
+    70% { box-shadow: 0 0 0 12px rgba(255, 117, 140, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(255, 117, 140, 0); }
+}
+
+/* Lista de canciones desplegable */
 .music-list {
     position: absolute;
     top: 120%;
@@ -208,12 +214,12 @@ body {
     transform: translateX(4px);
 }
 
-/* 📸 SECCIÓN ÁLBUM: Pila de fotos Polaroid Única */
+/* 📸 SECCIÓN ÁLBUM: Pila de fotos Polaroid */
 .image-section {
     position: relative;
     width: 100%;
     height: 340px;
-    margin-bottom: 30px;
+    margin-bottom: 35px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -232,10 +238,12 @@ body {
     height: 290px;
     background: white;
     padding: 12px 12px 45px 12px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1), 0 2px 5px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08), 0 2px 6px rgba(0, 0, 0, 0.04);
     border-radius: 2px;
-    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.3s, z-index 0.1s;
+    transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.3s, box-shadow 0.3s;
     cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
     backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
 }
@@ -244,15 +252,19 @@ body {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    pointer-events: none; /* Crucial: hace que el clic pase directo al contenedor de la tarjeta */
-    border-radius: 2px;
+    pointer-events: none; /* Crucial para redirigir el toque al contenedor */
+    border-radius: 1px;
 }
 
-/* Cuando una Polaroid está activa (se le dio clic) */
-.polaroid-card.active {
-    transform: scale(1.12) rotate(0deg) translateY(-10px) !important;
-    z-index: 999 !important; /* Se va al frente absoluto */
-    box-shadow: 0 25px 50px rgba(255, 117, 140, 0.25);
+.polaroid-card.shuffling {
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+@media (hover: hover) {
+    .polaroid-card:hover:not(.shuffling) {
+        transform: scale(1.03) rotate(0deg) !important;
+        box-shadow: 0 15px 35px rgba(255, 117, 140, 0.15);
+    }
 }
 
 .gallery-hint {
@@ -261,7 +273,6 @@ body {
     margin-top: 15px;
     font-weight: 300;
 }
-
 
 /* Sección de Texto Final */
 .text-section {
@@ -292,10 +303,9 @@ body {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     display: inline-block;
-    animation: simpleGlow 3s ease-in-out infinite alternate;
 }
 
-/* Partículas Románticas */
+/* Partículas */
 #particles-container {
     position: fixed;
     top: 0;
