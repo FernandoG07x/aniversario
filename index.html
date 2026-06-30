@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>El 6 de cada mes</title>
-    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <title>Nuestra Historia - El 6 de cada mes</title>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -16,34 +16,48 @@
     <div class="main-container">
         <div class="glass-card">
             <header>
-                <h1 class="titulo-animado">El día 6 de cada mes...</h1>
-                <p class="subtitulo">Es Memoria y Gratitud</p>
+                <h1 class="titulo-animado">Cada 6 del mes...</h1>
+                <p class="subtitulo">Celebramos nuestra historia</p>
             </header>
+
+            <div class="contador-tiempo" id="contador">
+                <span class="tiempo-bloque" id="meses">00</span>m 
+                <span class="tiempo-bloque" id="dias">00</span>d 
+                <span class="tiempo-bloque" id="horas">00</span>h 
+                <span class="tiempo-bloque" id="minutos">00</span>m
+                <div class="contador-leyenda">Juntos llenando el mundo de magia</div>
+            </div>
 
             <div class="music-player">
                 <button id="btnMusica" onclick="toggleMenu()" class="floating-btn">
-                    <span id="music-icon">❄️</span>
-                    <span id="music-text">Elegir nuestra música</span>
+                    <span id="music-icon">❤️</span>
+                    <span id="music-text">Ponle música a nuestro momento</span>
                 </button>
                 
-                <div id="lista-musica" class="music-list hidden">
-                    <div class="track" onclick="seleccionarMusica('Musica/musica1.mp3', 'El Inicio de nuestra historia')">🎵 Canción 1</div>
-                    <div class="track" onclick="seleccionarMusica('Musica/musica2.mp3', 'Momento Mágico')">🎵 Canción 2</div>
-                    <div class="track" onclick="seleccionarMusica('Musica/musica3.mp3', 'TE AMO')">🎵 Canción 3</div>
-                    <div class="track" onclick="seleccionarMusica('Musica/musica4.mp3', 'Nuestra Historia')">🎵 Canción 4</div>
-                    <div class="track" onclick="seleccionarMusica('Musica/musica5.mp3', 'Siempre Juntos')">🎵 Canción 5</div>
+                <div id="lista-musica" class="music-list">
+                    <div class="track" onclick="seleccionarMusica('Musica/musica1.mp3', 'El Inicio de nuestra historia')">🎵 El Inicio de Todo</div>
+                    <div class="track" onclick="seleccionarMusica('Musica/musica2.mp3', 'Momento Mágico')">✨ Nuestro Momento Mágico</div>
+                    <div class="track" onclick="seleccionarMusica('Musica/musica3.mp3', 'TE AMO')">💖 Contigo la Vida es Bella</div>
+                    <div class="track" onclick="seleccionarMusica('Musica/musica4.mp3', 'Nuestra Historia')">📖 Nuestra Canción</div>
+                    <div class="track" onclick="seleccionarMusica('Musica/musica5.mp3', 'Siempre Juntos')">🔒 Promesa de Amor</div>
                 </div>
             </div>
 
             <div class="image-section">
                 <div class="album-container">
                     <div class="album-wrapper" id="contenedor-fotos"></div>
+                    
+                    <button class="nav-btn prev-btn" onclick="cambiarFoto(-1)">&#10094;</button>
+                    <button class="nav-btn next-btn" onclick="cambiarFoto(1)">&#10095;</button>
+                    
+                    <div class="foto-indicador" id="foto-contador">1 / 29</div>
                 </div>
+                <div class="foto-dedicatoria" id="foto-dedicatoria">Cargando memorias...</div>
             </div>
             
             <div class="text-section">
-                <p class="mensaje-final">Gracias por cada momento compartido y por ser parte de mi camino.</p>
-                <h2 class="aniversario-glow">¡Feliz Aniversario!</h2>
+                <p class="mensaje-final">Gracias por cada sonrisa, por tu paciencia infinita y por hacerme el hombre más feliz del mundo.</p>
+                <h2 class="aniversario-glow">¡Feliz Aniversario, Aura!</h2>
             </div>
         </div>
     </div>
