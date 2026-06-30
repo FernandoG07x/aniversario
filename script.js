@@ -1,34 +1,93 @@
 const config = {
-    totalFotos: 26,
+    totalFotos: 29,
     carpetaFotos: "fotos",
-    carpetaMusica: "Musica"
+    carpetaMusica: "Musica",
+    fechaAniversario: "2025-10-06T00:00:00"
+};
+
+let fotoActual = 0;
+let fotosCargadas = [];
+let carruselInterval;
+
+// TEXTOS PERSONALIZADOS PARA CADA FOTO
+// Puedes editar los textos entre comillas para personalizar los momentos
+const dedicatorias = {
+    1: "El día en que mi mundo cambió por completo... ✨",
+    2: "Esa sonrisa tuya que me desarma cada día. 😍",
+    3: "Nuestra primera aventura juntos de tantas.",
+    4: "Tus abrazos son mi lugar seguro en el mundo.",
+    5: "La complicidad perfecta en una sola foto. 🔒",
+    26: "Por esta y mil fotos más escribiendo nuestra historia. Te amo."
 };
 
 function cargarFotos() {
     const contenedor = document.getElementById('contenedor-fotos');
     if (!contenedor) return;
 
-    contenedor.innerHTML = ""; // Limpia para evitar duplicados
+    contenedor.innerHTML = ""; 
 
     for (let i = 1; i <= config.totalFotos; i++) {
         const img = document.createElement('img');
         img.src = `${config.carpetaFotos}/foto${i}.jpeg`;
         img.classList.add('foto-pareja');
+        if (i === 1) img.classList.add('active');
         img.alt = `Momento ${i}`;
         
         img.onerror = function() {
             if (this.src.includes('.jpeg')) {
                 this.src = this.src.replace('.jpeg', '.jpg');
             } else {
-                this.remove(); // En lugar de display: none, la quitamos del DOM
+                this.remove();
+                actualizarArrayFotos();
             }
         };
         contenedor.appendChild(img);
     }
+    
+    setTimeout(actualizarArrayFotos, 200);
+}
+
+function actualizarArrayFotos() {
+    fotosCargadas = document.querySelectorAll('.foto-pareja');
+    mostrarFoto(0);
+    iniciarAutoplay();
+}
+
+function mostrarFoto(indice) {
+    if (fotosCargadas.length === 0) return;
+    
+    if (fotosCargadas[fotoActual]) {
+        fotosCargadas[fotoActual].classList.remove('active');
+    }
+    
+    fotoActual = (indice + fotosCargadas.length) % fotosCargadas.length;
+    fotosCargadas[fotoActual].classList.add('active');
+    
+    document.getElementById('foto-contador').innerText = `${fotoActual + 1} / ${fotosCargadas.length}`;
+    
+    const numeroFotoReal = fotoActual + 1;
+    const texto = dedicatorias[numeroFotoReal] || `Cada momento a tu lado es mi favorito. (Momento ${numeroFotoReal})`;
+    document.getElementById('foto-dedicatoria').innerText = texto;
+}
+
+function cambiarFoto(direccion) {
+    mostrarFoto(fotoActual + direccion);
+    reiniciarAutoplay();
+}
+
+function iniciarAutoplay() {
+    carruselInterval = setInterval(() => {
+        cambiarFoto(1);
+    }, 4500);
+}
+
+function reiniciarAutoplay() {
+    clearInterval(carruselInterval);
+    iniciarAutoplay();
 }
 
 function toggleMenu() {
-    document.getElementById("lista-musica").classList.toggle("hidden");
+    document.getElementById("lista-musica").classList.toggle("show");
 }
 
 function seleccionarMusica(rutaArchivo, nombreMostrar) {
@@ -47,36 +106,61 @@ function seleccionarMusica(rutaArchivo, nombreMostrar) {
     toggleMenu();
 }
 
+function actualizarContador() {
+    const fechaInicio = new Date(config.fechaAniversario);
+    const ahora = new Date();
+    
+    let difMilisecon = ahora - fechaInicio;
+    
+    let totalMinutos = Math.floor(difMilisecon / 60000);
+    let totalHoras = Math.floor(totalMinutos / 60);
+    let totalDias = Math.floor(totalHoras / 24);
+    
+    let meses = Math.floor(totalDias / 30.4375);
+    let diasRestantes = Math.floor(totalDias % 30.4375);
+    let horasRestantes = totalHoras % 24;
+    let minutosRestantes = totalMinutos % 60;
+    
+    document.getElementById('meses').innerText = String(meses).padStart(2, '0');
+    document.getElementById('dias').innerText = String(diasRestantes).padStart(2, '0');
+    document.getElementById('horas').innerText = String(horasRestantes).padStart(2, '0');
+    document.getElementById('minutos').innerText = String(minutosRestantes).padStart(2, '0');
+}
+
 function crearParticula() {
     const container = document.getElementById('particles-container');
     if(!container) return;
+    
+    if (container.children.length > 40) return;
     
     const p = document.createElement('div');
     p.classList.add('particle');
     
     const r = Math.random();
-    if (r < 0.33) p.innerHTML = '❤️';
-    else if (r < 0.66) p.innerHTML = '🦋';
-    else p.innerHTML = '❄️';
+    if (r < 0.45) p.innerHTML = '❤️';
+    else if (r < 0.75) p.innerHTML = '🦋';
+    else p.innerHTML = '✨';
 
     p.style.left = Math.random() * 100 + 'vw';
-    p.style.fontSize = (Math.random() * 12 + 15) + 'px';
-    p.style.animationDuration = (Math.random() * 3 + 4) + 's';
+    p.style.fontSize = (Math.random() * 10 + 14) + 'px';
+    p.style.animationDuration = (Math.random() * 4 + 4) + 's';
     
     container.appendChild(p);
-    setTimeout(() => p.remove(), 6000);
+    setTimeout(() => p.remove(), 7000);
 }
 
 window.onclick = function(event) {
     if (!event.target.closest('.music-player')) {
         const lista = document.getElementById("lista-musica");
-        if (lista && !lista.classList.contains('hidden')) {
-            lista.classList.add('hidden');
+        if (lista && lista.classList.contains('show')) {
+            lista.classList.remove('show');
         }
     }
 }
 
 document.addEventListener("DOMContentLoaded", () => {
     cargarFotos();
-    setInterval(crearParticula, 600);
+    actualizarContador();
+    setInterval(actualizarContador, 60000);
+    setInterval(crearParticula, 500);
 });
