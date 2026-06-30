@@ -2,7 +2,7 @@ const config = {
     totalFotos: 29,
     carpetaFotos: "fotos",
     carpetaMusica: "Musica",
-    fechaAniversario: "2025-10-06T00:00:00"
+    fechaAniversario: "2025-09-06T00:00:00"
 };
 
 let fotoActual = 0;
