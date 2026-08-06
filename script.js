@@ -1,5 +1,5 @@
 const config = {
-    totalFotos: 29,
+    totalFotos: 35,
     carpetaFotos: "fotos",
     carpetaMusica: "Musica",
     fechaAniversario: "2025-09-06T00:00:00"
@@ -17,6 +17,26 @@ const dedicatorias = {
     3: "Nuestra primera aventura juntos de tantas.",
     4: "Tus abrazos son mi lugar seguro en el mundo.",
     5: "La complicidad perfecta en una sola foto. 🔒",
+    6: "Cada momento a tu lado se convierte en mi favorito. 💖",
+    7: "El mejor regalo de mi vida siempre serás tú.",
+    8: "Simplemente nosotros, sin filtros y con todo el corazón.",
+    9: "Donde sea, pero si es contigo, mucho mejor. 🌍",
+    10: "Esa mirada que me dice todo sin hablar.",
+    11: "Un recuerdo más guardado en el baúl de mis tesoros.",
+    12: "Gracias por hacerme sonreír incluso en los días difíciles. ☀️",
+    13: "Mi persona favorita en todo el universo.",
+    14: "La forma más bonita de coincidir en esta vida.",
+    15: "Detalles pequeños que hacen historias gigantes. ✨",
+    16: "Amo la paz que me da estar a tu lado.",
+    17: "Risas, locuras y un amor que no se acaba.",
+    18: "Contigo el tiempo siempre se pasa volando. ⏳",
+    19: "Mi mejor decisión siempre vas a ser tú.",
+    20: "Coleccionando momentos inolvidables a tu lado. 📸",
+    21: "Tu felicidad siempre va a ser la mía.",
+    22: "Un pedacito de nuestra historia juntos.",
+    23: "Haces que todo lo bonito valga la pena.",
+    24: "Mi hogar no es un lugar, es a tu lado. 🏡",
+    25: "Gracias por ser mi refugio, mi amor y mi vida. 💕",
     26: "Por esta y mil fotos más escribiendo nuestra historia. Te amo."
 };
 
