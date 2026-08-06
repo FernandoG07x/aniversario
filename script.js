@@ -1,5 +1,5 @@
 const config = {
-    totalFotos: 35,
+    totalFotos: 36,
     carpetaFotos: "fotos",
     carpetaMusica: "Musica",
     fechaAniversario: "2025-09-06T00:00:00"
